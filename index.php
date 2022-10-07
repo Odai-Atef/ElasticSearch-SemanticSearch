@@ -74,15 +74,14 @@
             <div class="table-responsive" id="sailorTableArea">
                 <table id="sailorTable" class="table table-striped table-bordered" width="100%">
                     <tbody>
-                <?php foreach($data['hits']['hits'] as $tweet){
+                <?php
+                if(isset($data['hits']['hits']))
+                foreach($data['hits']['hits'] as $tweet){
                     ?>
                     <tr>
                         <td><?php echo str_replace(strtolower($_GET['keyword']),"<b>".$_GET['keyword']."</b>",strtolower($tweet['_source']['Document_name'])) ?></td>
                     </tr>
                     <?php } ?>
-                    <tr>
-                        <td>Garrett</td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
