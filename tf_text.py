@@ -7,13 +7,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
 
-@app.route("/vector/<text>")
-def calc_vector(text):
-    return embed_text([text])[0]
 
 
 graph = tf.Graph()
@@ -28,6 +22,12 @@ with tf.Session(graph = graph) as session:
     session = tf.Session()
     session.run(tf.global_variables_initializer())
     session.run(tf.tables_initializer())
+    @app.route("/")
+    def hello_world():
+        return "<p>Hello, World!</p>"
+    @app.route("/vector/<text>")
+    def calc_vector(text):
+        return embed_text([text])[0]
     print("Done.")
     def embed_text(text):
         vectors = session.run(embeddings, feed_dict={text_ph: text})
