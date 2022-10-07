@@ -3,6 +3,19 @@ import tensorflow_hub as hub
 import os
 import json
 import io
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
+
+@app.route("/vector/<text>")
+def calc_vector(text):
+    return embed_text([text])[0]
+
+
 graph = tf.Graph()
 
 with tf.Session(graph = graph) as session:
@@ -39,12 +52,12 @@ with tf.Session(graph = graph) as session:
 #             f.write(json.dumps(data, ensure_ascii=False))
 
 
-text="salah"
-text_vector = embed_text([text])[0]
-print("Text to be embedded: {}".format(text))
-print("Obtained Embedding[{},…]\n".format(text_vector[:5]))
-with io.open("/home/odai/v.json", 'w', encoding='utf-8') as f:
-    f.write(json.dumps(text_vector, ensure_ascii=False))
+# text="salah"
+# text_vector = embed_text([text])[0]
+# print("Text to be embedded: {}".format(text))
+# print("Obtained Embedding[{},…]\n".format(text_vector[:5]))
+# with io.open("/home/odai/v.json", 'w', encoding='utf-8') as f:
+#     f.write(json.dumps(text_vector, ensure_ascii=False))
 # text="عدي عاطف"
 
 # 

@@ -23,4 +23,3 @@ foreach ($docs as $doc){
 
     }
 }
-postReq([]);
