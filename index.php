@@ -28,7 +28,7 @@
         </div>
         <?php
         if (isset($_GET['keyword']) && $_GET['keyword'] != "") {
-            $vector =json_decode(file_get_contents("http://3.125.9.240:5000/vector/" . $_GET["keyword"]),true);
+            $vector =json_decode(file_get_contents("http://3.125.9.240:5000/vector/" . urlencode($_GET["keyword"])),true);
 
             $data=postReq( [
                 "size" => 1000,
@@ -38,7 +38,7 @@
                                 "match_all"=>[ "boost" => 1.2 ]
                         ] ,
                         "script" => [
-                            "source" => "cosineSimilarity(params.query_vector, 'Doc_vector') + 1.0",
+                            "source" => "cosineSimilarity(params.query_vector, 'Doc_vector') + 0.5",
                             "params" => [
                                 "query_vector" => $vector
                             ]
