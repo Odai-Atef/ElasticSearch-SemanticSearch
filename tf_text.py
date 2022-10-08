@@ -28,6 +28,7 @@ with tf.Session(graph = graph) as session:
     @app.route("/vector/<text>")
     def calc_vector(text):
         text=text.replace("+"," ")
+        print(text)
         return embed_text([text])[0]
     print("Done.")
     def embed_text(text):
