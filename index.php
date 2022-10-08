@@ -16,7 +16,8 @@
             <form method="get">
                 <div id="custom-search-input">
                     <div class="input-group">
-                        <input value="<?php echo isset($_GET['keyword'])?$_GET['keyword']:"" ?>" name="keyword" type="text" class="search-query form-control" placeholder="Search"/>
+                        <input value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : "" ?>" name="keyword"
+                               type="text" class="search-query form-control" placeholder="Search"/>
                         <span class="input-group-btn">
                         <button class="btn btn-lg btn-success" type="submit">
                             Search
@@ -28,15 +29,14 @@
         </div>
         <?php
         if (isset($_GET['keyword']) && $_GET['keyword'] != "") {
-            $vector =json_decode(file_get_contents("http://3.125.9.240:5000/vector/" . urlencode($_GET["keyword"])),true);
-
-            $data=postReq( [
+            $vector = json_decode(file_get_contents("http://3.125.9.240:5000/vector/" . urlencode($_GET["keyword"])), true);
+            $data = postReq([
                 "size" => 1000,
                 "query" => [
                     "script_score" => [
-                        "query" =>[
-                                "match_all"=>[ "boost" => 1.2 ]
-                        ] ,
+                        "query" => [
+                            "match_all" => ["boost" => 1.2]
+                        ],
                         "script" => [
                             "source" => "cosineSimilarity(params.query_vector, 'Doc_vector') + 0.5",
                             "params" => [
@@ -56,7 +56,7 @@
         }
         function postReq($data)
         {
-            $data=json_encode($data);
+            $data = json_encode($data);
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, "http://3.125.9.240:9221/tweets/_search");
             curl_setopt($ch, CURLOPT_POST, 1);
@@ -66,7 +66,7 @@
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($ch);
             curl_close($ch);
-            return json_decode($result,true);
+            return json_decode($result, true);
         }
 
         ?>
@@ -74,14 +74,18 @@
             <div class="table-responsive" id="sailorTableArea">
                 <table id="sailorTable" class="table table-striped table-bordered" width="100%">
                     <tbody>
-                <?php
-                if(isset($data['hits']['hits']))
-                foreach($data['hits']['hits'] as $tweet){
-                    ?>
-                    <tr>
-                        <td><?php echo str_replace(strtolower($_GET['keyword']),"<b>".$_GET['keyword']."</b>",strtolower($tweet['_source']['Document_name'])) ?></td>
-                    </tr>
-                    <?php } ?>
+                    <?php
+                    if (isset($data['hits']['hits']))
+                        foreach ($data['hits']['hits'] as $tweet) {
+                            ?>
+                            <tr>
+                                <td><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['Document_name'])) ?></td>
+                            </tr>
+                        <?php }else{
+                            ?>
+                        <tr ><td colspan="2">No Result Found</td></tr>
+                    <?php
+                    } ?>
                     </tbody>
                 </table>
             </div>
