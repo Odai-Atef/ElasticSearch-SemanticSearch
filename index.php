@@ -38,7 +38,7 @@
                             "match_all" => ["boost" => 1.2]
                         ],
                         "script" => [
-                            "source" => "cosineSimilarity(params.query_vector, 'Doc_vector') + 0.5",
+                            "source" => "cosineSimilarity(params.query_vector, 'product_name_vector') + 0.5",
                             "params" => [
                                 "query_vector" => $vector
                             ]
@@ -47,7 +47,7 @@
                 ],
                 "_source" => [
                     "includes" => [
-                        "Document_name"
+                        "product_name","product_description","product_id"
                     ]
                 ]
             ]);
@@ -58,7 +58,7 @@
         {
             $data = json_encode($data);
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "http://3.125.9.240:9221/tweets/_search");
+            curl_setopt($ch, CURLOPT_URL, "http://3.125.9.240:9221/products/_search");
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLINFO_CONTENT_TYPE, 1);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -79,7 +79,7 @@
                         foreach ($data['hits']['hits'] as $tweet) {
                             ?>
                             <tr>
-                                <td><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['Document_name'])) ?></td>
+                                <td><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ."<br/>".$tweet['_source']['product_description'] ?></td>
                             </tr>
                         <?php }else{
                             ?>
