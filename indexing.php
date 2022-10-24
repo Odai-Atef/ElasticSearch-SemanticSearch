@@ -14,7 +14,7 @@ function postReq($data){
     echo "<pre>$result</pre>";
     curl_close ($ch);
 }
-$dir=__DIR__."/var/www/html/Salla/vectors";
+$dir="/var/www/html/Salla/vectors";
 $docs=scandir($dir);
 foreach ($docs as $doc){
     if(!is_dir($dir."/$doc")){
