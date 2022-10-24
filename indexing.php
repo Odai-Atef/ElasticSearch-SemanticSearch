@@ -20,6 +20,7 @@ foreach ($docs as $doc){
     if(!is_dir($dir."/$doc")){
         $data=file_get_contents($dir."/$doc");
         postReq($data);
+        unlink($dir."/$doc");
 
     }
 }

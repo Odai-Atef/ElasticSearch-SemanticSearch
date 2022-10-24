@@ -38,7 +38,7 @@
                             "match_all" => ["boost" => 1.2]
                         ],
                         "script" => [
-                            "source" => "(cosineSimilarity(params.query_vector, 'product_name_vector') + cosineSimilarity(params.query_vector, 'product_description_vector'))/2 + 1.0",
+                            "source" => "cosineSimilarity(params.query_vector, 'product_name_vector') + 1.0",
                             "params" => [
                                 "query_vector" => $vector
                             ]

@@ -27,18 +27,18 @@ graph = tf.Graph()
 
 with tf.Session(graph = graph) as session:
     print("Downloading pre-trained embeddings from tensorflow hub…")
-    embed = hub.Module("https://tfhub.dev/google/universal-sentence-encoder/2")
-    text_ph = tf.placeholder(tf.string)
-    embeddings = embed(text_ph)
-    print("Done.")
-    print("Creating tensorflow session…")
-    session = tf.Session()
-    session.run(tf.global_variables_initializer())
-    session.run(tf.tables_initializer())
-    print("Done.")
-    def embed_text(text):
-        vectors = session.run(embeddings, feed_dict={text_ph: text})
-        return [vector.tolist() for vector in vectors]
+    embed = hub.Module("https://tfhub.dev/google/universal-sentence-encoder/3")
+    # text_ph = tf.placeholder(tf.string)
+    # embeddings = embed(text_ph)
+    # print("Done.")
+    # print("Creating tensorflow session…")
+    # session = tf.Session()
+    # session.run(tf.global_variables_initializer())
+    # session.run(tf.tables_initializer())
+    # print("Done.")
+    # def embed_text(text):
+    #     vectors = session.run(embeddings, feed_dict={text_ph: text})
+    #     return [vector.tolist() for vector in vectors]
 
 
 
