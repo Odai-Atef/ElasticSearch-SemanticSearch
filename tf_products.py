@@ -47,18 +47,20 @@ dir_path_vector=r'/var/www/html/Salla/vectors/'
 for path in os.listdir(dir_path):
     print(path)
     if os.path.isfile(os.path.join(dir_path, path)):
-        file = open(os.path.join(dir_path, path),'r')
-        content = json.load(file)
-        for product in content['products']:
-            product_name=str(product['name'])
-            product_name_vector=embed_text([product_name])[0]
-            product_description=strip_tags(str(product['description']))
-            product_description_vector=embed_text([product_description])[0]
-            product_id=product['id']
-            with io.open(os.path.join(dir_path_vector, str(product_id) +".json"), 'w', encoding='utf-8') as f:
-                data={'product_name':product_name,'product_name_vector':product_name_vector,'product_description':product_description,'product_description_vector':product_description_vector,'product_id':product_id}
-                f.write(json.dumps(data, ensure_ascii=False))
-
+        try:
+            file = open(os.path.join(dir_path, path),'r')
+            content = json.load(file)
+            for product in content['products']:
+                product_name=str(product['name'])
+                product_name_vector=embed_text([product_name])[0]
+                product_description=strip_tags(str(product['description']))
+                product_description_vector=embed_text([product_description])[0]
+                product_id=product['id']
+                with io.open(os.path.join(dir_path_vector, str(product_id) +".json"), 'w', encoding='utf-8') as f:
+                    data={'product_name':product_name,'product_name_vector':product_name_vector,'product_description':product_description,'product_description_vector':product_description_vector,'product_id':product_id}
+                    f.write(json.dumps(data, ensure_ascii=False))
+        except:
+            print("Error Parsing")
 
 # for path in os.listdir(dir_path):
 #     if os.path.isfile(os.path.join(dir_path, path)):
