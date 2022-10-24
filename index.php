@@ -5,13 +5,13 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Semantic Search</title>
+    <title>Search Engine Products</title>
 </head>
 <body>
 
 <div class="container" style="margin-top: 50px;">
     <div class="row">
-        <div class="col-12"><h2>Semantic search for premier league tweets</h2></div>
+        <div class="col-12"><h2>Search Engine for products</h2></div>
         <div class="col-12">
             <form method="get">
                 <div id="custom-search-input">
