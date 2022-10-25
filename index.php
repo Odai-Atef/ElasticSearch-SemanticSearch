@@ -11,7 +11,7 @@
 
 <div class="container" style="margin-top: 50px;">
     <div class="row">
-        <div class="col-12"><h2>Search Engine for products</h2></div>
+        <div class="col-12"><h2 class="text-center">Search Engine Demo</h2></div>
         <div class="col-12">
             <form method="get">
                 <div id="custom-search-input">
@@ -30,26 +30,80 @@
         <?php
         if (isset($_GET['keyword']) && $_GET['keyword'] != "") {
             $vector = json_decode(file_get_contents("http://3.125.9.240:5000/vector/" . urlencode($_GET["keyword"])), true);
+
+            $data_fuzzy = postReq([
+                "size" => 100,
+                "query" => [
+                    "multi_match" => [
+                        "fields" => ["product_name", "product_description"],
+                        "query" => $_GET['keyword'],
+                        "fuzziness" => "AUTO"
+                    ]
+                ],
+                "_source" => [
+                    "includes" => [
+                        "product_name", "product_description", "product_id"
+                    ]
+                ],
+                "sort" => [
+                    [
+                        "_score" => [
+                            "order" => "desc"
+                        ]
+                    ]
+                ]
+            ]);
+            $data_search = postReq([
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "wildcard" => [
+                                    "product_name" => "*" . $_GET['keyword'] . "*"
+                                ]
+                            ],
+                            [
+                                "wildcard" => [
+                                    "product_description" => "*" . $_GET['keyword'] . "*"
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]);
+
+
             $data = postReq([
-                "size" => 1000,
+                "size" => 100,
                 "query" => [
                     "script_score" => [
                         "query" => [
-                            "match_all" => ["boost" => 1.2]
+                            "match_all" => ["boost" => 1]
                         ],
                         "script" => [
                             "source" => "cosineSimilarity(params.query_vector, 'product_name_vector') + 1.0",
                             "params" => [
                                 "query_vector" => $vector
                             ]
-                        ]
+                        ],
+                        // "min_score"=> 2
                     ]
                 ],
                 "_source" => [
                     "includes" => [
-                        "product_name","product_description","product_id"
+                        "product_name", "product_description", "product_id"
                     ]
                 ]
+                ,
+                "sort" => [
+                    [
+                        "_score" => [
+                            "order" => "asc"
+                        ]
+                    ]
+                ]
+
+
             ]);
 
 
@@ -70,26 +124,92 @@
         }
 
         ?>
-        <div class="col-12" style="margin-top: 50px;">
-            <div class="table-responsive" id="sailorTableArea">
-                <table id="sailorTable" class="table table-striped table-bordered" width="100%">
+        <div class="col-4" style="margin-top: 50px;">
+            <div class="table-responsive">
+            <h3 class="text-center">Semantic Search</h3>
+                <table class="table table-striped table-bordered" width="100%">
                     <tbody>
                     <?php
                     if (isset($data['hits']['hits']))
                         foreach ($data['hits']['hits'] as $tweet) {
                             ?>
                             <tr>
-                                <td><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ."<br/>".$tweet['_source']['product_description'] ?></td>
+                                <td>
+                                    <h5>
+                                        <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ?>
+                                    </h5>
+                                    <p><?php echo $tweet['_source']['product_description'] ?></p></td>
                             </tr>
-                        <?php }else{
-                            ?>
-                        <tr ><td colspan="2">No Result Found</td></tr>
-                    <?php
+                        <?php } else {
+                        ?>
+                        <tr>
+                            <td colspan="2">No Result Found</td>
+                        </tr>
+                        <?php
                     } ?>
                     </tbody>
                 </table>
             </div>
         </div>
+
+
+        <div class="col-4" style="margin-top: 50px;">
+            <div class="table-responsive">
+                <h3 class="text-center">Fuzzy Search</h3>
+                <table class="table table-striped table-bordered" width="100%">
+                    <tbody>
+                    <?php
+                    if (isset($data_fuzzy['hits']['hits']))
+                        foreach ($data_fuzzy['hits']['hits'] as $tweet) {
+                            ?>
+                            <tr>
+                                <td>
+                                    <h5>
+                                        <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ?>
+                                    </h5>
+                                    <p><?php echo $tweet['_source']['product_description'] ?></p></td>
+                            </tr>
+                        <?php } else {
+                        ?>
+                        <tr>
+                            <td colspan="2">No Result Found</td>
+                        </tr>
+                        <?php
+                    } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="col-4" style="margin-top: 50px;">
+            <div class="table-responsive">
+            <h3 class="text-center">Exact Match Search</h3>
+                <table class="table table-striped table-bordered" width="100%">
+                    <tbody>
+                    <?php
+                    if (isset($data_search['hits']['hits']))
+                        foreach ($data_search['hits']['hits'] as $tweet) {
+                            ?>
+                            <tr>
+                                <td>
+                                    <h5>
+                                        <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ?>
+                                    </h5>
+                                    <p><?php echo $tweet['_source']['product_description'] ?></p></td>
+                            </tr>
+                        <?php } else {
+                        ?>
+                        <tr>
+                            <td colspan="2">No Result Found</td>
+                        </tr>
+                        <?php
+                    } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>
 
