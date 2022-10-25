@@ -36,7 +36,7 @@ dir_path_vector=r'/var/www/html/Salla/vectors/'
 products_data=[]
 for path in os.listdir(dir_path):
     if os.path.isfile(os.path.join(dir_path, path)):
-        # try:
+        try:
             file = open(os.path.join(dir_path, path),'r')
             content = json.load(file)
             for product in content['products']:
@@ -50,7 +50,7 @@ for path in os.listdir(dir_path):
 
                 products_data.append({"index": {"_index": "products", "_id": product_id}})
                 products_data.append(data)
-                if len(products_data)>=1000:
+                if len(products_data)>=500:
                     resp = client.bulk(body=products_data)
                     products_data=[]
                     # print(resp)
@@ -59,5 +59,5 @@ for path in os.listdir(dir_path):
                 #     print(data)
                 #     f.write(json.dumps(data, ensure_ascii=False))
                 
-        # except:
-            # print("Error Parsing")
+        except:
+            print("Error Parsing")
