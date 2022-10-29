@@ -41,12 +41,16 @@ for path in os.listdir(dir_path):
             content = json.load(file)
             for product in content['products']:
                 product_name=product['name']
-                product_name_vector=embed([product_name])[0].numpy().tolist()
+                # product_name_vector=embed([product_name])[0].numpy().tolist()
                 product_description=strip_tags(str(product['description']))
-                product_description_vector=embed([product_description])[0].numpy().tolist()
+                # product_description_vector=embed([product_description])[0].numpy().tolist()
                 product_id=product['id']
                 # print(os.path.join(dir_path_vector, str(product_id) +".json"))
-                data={'product_name':product_name,'product_name_vector':product_name_vector,'product_description':product_description,'product_description_vector':product_description_vector,'product_id':product_id}
+                data={'product_name':product_name,
+                #'product_name_vector':product_name_vector
+                ,'product_description':product_description,
+                #'product_description_vector':product_description_vector
+                ,'product_id':product_id}
 
                 products_data.append({"index": {"_index": "products", "_id": product_id}})
                 products_data.append(data)

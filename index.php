@@ -29,14 +29,14 @@
         </div>
         <?php
         if (isset($_GET['keyword']) && $_GET['keyword'] != "") {
-            $vector = json_decode(file_get_contents("http://3.125.9.240:5000/vector/" . urlencode($_GET["keyword"])), true);
+            $vector = json_decode(file_get_contents("http://3.125.9.240:5000/vector/" . urlencode(trim($_GET["keyword"]))), true);
 
             $data_fuzzy = postReq([
                 "size" => 100,
                 "query" => [
                     "multi_match" => [
                         "fields" => ["product_name", "product_description"],
-                        "query" => $_GET['keyword'],
+                        "query" => trim($_GET['keyword']),
                         "fuzziness" => "AUTO"
                     ]
                 ],
@@ -59,12 +59,12 @@
                         "must" => [
                             [
                                 "wildcard" => [
-                                    "product_name" => "*" . $_GET['keyword'] . "*"
+                                    "product_name" => "*" .trim($_GET['keyword']) . "*"
                                 ]
                             ],
                             [
                                 "wildcard" => [
-                                    "product_description" => "*" . $_GET['keyword'] . "*"
+                                    "product_description" => "*" .trim($_GET['keyword']) . "*"
                                 ]
                             ]
                         ]
@@ -78,7 +78,7 @@
                 "query" => [
                     "script_score" => [
                         "query" => [
-                            "match_all" => ["boost" => 1]
+                            "match_all" => ["boost" => 0]
                         ],
                         "script" => [
                             "source" => "cosineSimilarity(params.query_vector, 'product_name_vector') + 1.0",
@@ -94,14 +94,7 @@
                         "product_name", "product_description", "product_id"
                     ]
                 ]
-                ,
-                "sort" => [
-                    [
-                        "_score" => [
-                            "order" => "asc"
-                        ]
-                    ]
-                ]
+             
 
 
             ]);
@@ -138,7 +131,7 @@
                                     <h5>
                                         <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ?>
                                     </h5>
-                                    <p><?php echo $tweet['_source']['product_description'] ?></p></td>
+                                    <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>",strtolower($tweet['_source']['product_description'])) ?></p></td>
                             </tr>
                         <?php } else {
                         ?>
@@ -167,7 +160,7 @@
                                     <h5>
                                         <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ?>
                                     </h5>
-                                    <p><?php echo $tweet['_source']['product_description'] ?></p></td>
+                                    <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>",strtolower($tweet['_source']['product_description'])) ?></p></td>
                             </tr>
                         <?php } else {
                         ?>
@@ -196,7 +189,7 @@
                                     <h5>
                                         <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ?>
                                     </h5>
-                                    <p><?php echo $tweet['_source']['product_description'] ?></p></td>
+                                    <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>",strtolower($tweet['_source']['product_description'])) ?></p></td>
                             </tr>
                         <?php } else {
                         ?>
