@@ -39,7 +39,7 @@ for path in os.listdir(dir_path):
         try:
             file = open(os.path.join(dir_path, path),'r')
             content = json.load(file)
-            for product in content['products']:
+            for product in content['stg_mysql_salla__products']:
                 product_name=product['name']
                 # product_name_vector=embed([product_name])[0].numpy().tolist()
                 product_description=strip_tags(str(product['description']))
@@ -61,6 +61,7 @@ for path in os.listdir(dir_path):
                 #     data={'product_name':product_name,'product_name_vector':product_name_vector,'product_description':product_description,'product_description_vector':product_description_vector,'product_id':product_id}
                 #     print(data)
                 #     f.write(json.dumps(data, ensure_ascii=False))
+            os.remove(os.path.join(dir_path, path))
                 
         except:
             print("Error Parsing")
