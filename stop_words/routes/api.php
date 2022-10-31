@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get("/words", function () {
-    return Arr::pluck(\App\StopWord::select("word")->get(),"word");
+    $words= Arr::pluck(\App\StopWord::select("word")->get(),"word");
+    return str_replace("+OR+"," OR ",str_replace(" ","+",implode(" OR ",$words)));
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
