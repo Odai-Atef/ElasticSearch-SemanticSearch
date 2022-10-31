@@ -34,15 +34,15 @@
             $data_fuzzy = postReq([
                 "size" => 100,
                 "query" => [
-                    "multi_match" => [
+                    "query_string" => [
                         "fields" => ["product_name", "product_description"],
-                        "query" => trim($_GET['keyword']),
+                        "query" => trim($_GET['keyword']) . " AND !($stop_words)",
                         "fuzziness" => "AUTO"
                     ],
-                    "query_string" =>[
-                        "query" => "!($stop_words)",
-                        "fields"  => ["product_name", "product_description"]
-                    ]
+                    // "query_string" =>[
+                    //     "query" => "!($stop_words)",
+                    //     "fields"  => ["product_name"]
+                    // ]
                 ],
                 "_source" => [
                     "includes" => [
@@ -108,8 +108,9 @@
         function postReq($data)
         {
             $data = json_encode($data);
+            // echo $data."</br>";
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "http://3.125.9.240:9221/products/_search");
+            curl_setopt($ch, CURLOPT_URL, "http://3.125.9.240:9221/products/_search?scroll=1m");
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLINFO_CONTENT_TYPE, 1);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -121,38 +122,11 @@
         }
 
         ?>
-        <div class="col-4" style="margin-top: 50px;">
-            <div class="table-responsive">
-            <h3 class="text-center">Semantic Search</h3>
-                <table class="table table-striped table-bordered" width="100%">
-                    <tbody>
-                    <?php
-                    if (isset($data['hits']['hits']))
-                        foreach ($data['hits']['hits'] as $tweet) {
-                            ?>
-                            <tr>
-                                <td>
-                                    <h5>
-                                        <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ?>
-                                    </h5>
-                                    <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>",strtolower($tweet['_source']['product_description'])) ?></p></td>
-                            </tr>
-                        <?php } else {
-                        ?>
-                        <tr>
-                            <td colspan="2">No Result Found</td>
-                        </tr>
-                        <?php
-                    } ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+       
 
-
-        <div class="col-4" style="margin-top: 50px;">
+        <div class="col-12" style="margin-top: 50px;">
             <div class="table-responsive">
-                <h3 class="text-center">Fuzzy Search</h3>
+                <h3 class="text-left">Fuzzy Search (<?php echo number_format($data_fuzzy['hits']['total']['value']??0); ?>)</h3>
                 <table class="table table-striped table-bordered" width="100%">
                     <tbody>
                     <?php
@@ -179,34 +153,7 @@
         </div>
 
 
-        <div class="col-4" style="margin-top: 50px;">
-            <div class="table-responsive">
-            <h3 class="text-center">Exact Match Search</h3>
-                <table class="table table-striped table-bordered" width="100%">
-                    <tbody>
-                    <?php
-                    if (isset($data_search['hits']['hits']))
-                        foreach ($data_search['hits']['hits'] as $tweet) {
-                            ?>
-                            <tr>
-                                <td>
-                                    <h5>
-                                        <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ?>
-                                    </h5>
-                                    <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>",strtolower($tweet['_source']['product_description'])) ?></p></td>
-                            </tr>
-                        <?php } else {
-                        ?>
-                        <tr>
-                            <td colspan="2">No Result Found</td>
-                        </tr>
-                        <?php
-                    } ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+      
     </div>
 </div>
 
