@@ -29,8 +29,8 @@
         </div>
         <?php
         if (isset($_GET['keyword']) && $_GET['keyword'] != "") {
+            $stop_words=file_get_contents("http://3.125.9.240/ElasticSearch-SemanticSearch/stop_words/public/index.php/api/words");
             $vector = json_decode(file_get_contents("http://3.125.9.240:5000/vector/" . urlencode(trim($_GET["keyword"]))), true);
-
             $data_fuzzy = postReq([
                 "size" => 100,
                 "query" => [
@@ -38,6 +38,10 @@
                         "fields" => ["product_name", "product_description"],
                         "query" => trim($_GET['keyword']),
                         "fuzziness" => "AUTO"
+                    ],
+                    "query_string" =>[
+                        "query" => "!($stop_words)",
+                        "fields"  => ["product_name", "product_description"]
                     ]
                 ],
                 "_source" => [
