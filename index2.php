@@ -5,6 +5,9 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
     <title>Search Engine Products</title>
 </head>
 <body>
@@ -16,7 +19,7 @@
             <form method="get">
                 <div id="custom-search-input">
                     <div class="input-group">
-                        <input value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : "" ?>" name="keyword"
+                        <input id="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : "" ?>" name="keyword"
                                type="text" class="search-query form-control" placeholder="Search"/>
                         <span class="input-group-btn">
                         <button class="btn btn-lg btn-success" type="submit">
@@ -105,12 +108,23 @@
 
 
         }
+        function agg($data){
+            $data["aggs"]=[
+                "my-agg-name"=>[
+                    "terms"=>[
+                        "field"=>"category_id"
+                    ]
+                ]
+            ];
+            $data['size']=0;
+            return postReq($data);
+        }
         function postReq($data)
         {
             $data = json_encode($data);
             // echo $data."</br>";
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "http://3.125.9.240:9221/products/_search?scroll=1m");
+            curl_setopt($ch, CURLOPT_URL, "http://3.125.9.240:9221/products2/_search?scroll=1m");
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLINFO_CONTENT_TYPE, 1);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -156,6 +170,50 @@
 
     </div>
 </div>
+    <script >
+        
+        $( function() {
+  
+   
+
+    $("#keyword").autocomplete({
+      source: function( request, response ) {
+        $.ajax( {
+          url: "./auto_complete.php",
+          dataType: "json",
+          data: {
+            keyword: request.term
+          },
+          success: function( data ) {
+            response( data );
+          }
+        } );
+      },
+      minLength: 1,
+      select: function( event, ui ) {
+        log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+      }
+    } );
+
+
+
+  } );
+        // $(document).ready(function(){
+
+        //     $("#keyword").on("keyup",function(){
+        //         var v=$(this).val();
+        //         if(v.length >3 ){
+        //             $.get("./auto_complete.php?keyword="+v).then((res)=>{
+        //                 availableTags=res;
+        //                 console.log(res);
+        //             });
+        //         }
+        //     })
+
+        // });
+       
+
+    </script>
 
 </body>
 </html>
