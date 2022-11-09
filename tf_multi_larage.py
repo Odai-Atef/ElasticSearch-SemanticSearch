@@ -1,6 +1,6 @@
-import tensorflow_hub as hub
+# import tensorflow_hub as hub
 import numpy as np
-import tensorflow_text
+# import tensorflow_text
 import os
 import json
 import io
@@ -25,11 +25,12 @@ class MLStripper(HTMLParser):
         return self.text.getvalue()
 
 def strip_tags(html):
+    html=str(html)
     s = MLStripper()
     s.feed(html)
     return s.get_data()
     
-embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder-multilingual-large/3")
+# embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder-multilingual-large/3")
 # Compute embeddings.
 dir_path=r'/var/www/html/Salla/New/'
 dir_path_vector=r'/var/www/html/Salla/vectors/'
@@ -39,11 +40,11 @@ for path in os.listdir(dir_path):
         try:
             file = open(os.path.join(dir_path, path),'r')
             content = json.load(file)
-            for product in content['SELECT salla_reports.stg_mysql_salla__products.name  as product_name,\r\ncategory_id,\r\nsalla_reports.stg_mysql_salla__products.description as product_description,\r\nsalla_reports.stg_mysql_salla__product_options.description as option_description,\r\nsalla_reports.stg_mysql_salla__brands.name as brand_name,\r\nsalla_reports.stg_mysql_salla__product_options.id as product_id  from salla_reports.stg_mysql_salla__products \r\njoin salla_reports.stg_mysql_salla__product_categories on salla_reports.stg_mysql_salla__product_categories.product_id = salla_reports.stg_mysql_salla__products.id\r\njoin salla_reports.stg_mysql_salla__brands on salla_reports.stg_mysql_salla__products.brand_id = salla_reports.stg_mysql_salla__brands.id \r\njoin salla_reports.stg_mysql_salla__product_options smspo  on  salla_reports.stg_mysql_salla__product_options.product_id  = salla_reports.stg_mysql_salla__products.id ']:
+            for product in content['SELECT smsp.id as product_id, smsp.name as product_name,smsc.id as category_id ,\r\nsmsc.name as category_name,smsp.description as product_description, smsb.name as brand_name\r\nFROM salla_reports.stg_mysql_salla__products smsp \r\nJOIN stg_mysql_salla__product_categories smspc  on stg_mysql_salla__product_categories.product_id = smsp.id \r\nJOIN stg_mysql_salla__categories smsc on stg_mysql_salla__product_categories.category_id = stg_mysql_salla__categories.id \r\nJOIN stg_mysql_salla__brands smsb on smsb.id = smsp.brand_id ']:
                 data=product
                 data['product_description']=strip_tags(data['product_description'])
                 product_id=product['product_id']
-                products_data.append({"index": {"_index": "products2", "_id": product_id}})
+                products_data.append({"index": {"_index": "products3", "_id": product_id}})
                 products_data.append(data)
                 if len(products_data)>=1000:
                     resp = client.bulk(body=products_data)

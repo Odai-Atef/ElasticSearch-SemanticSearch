@@ -11,9 +11,10 @@
     "size" => 0,
     "query" => [
         "query_string" => [
-            "fields" => ["product_name", "product_description"],
+            "fields" => ["product_name", "product_description","brand_name","option_description"],
+
             "query" => trim($_GET['keyword']) . " AND !($stop_words)",
-            "fuzziness" => "1"
+            "fuzziness" => "AUTO"
         ]
        
     ]
