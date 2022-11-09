@@ -55,9 +55,10 @@
                         }
                     } );
                 },
-                minLength: 1,
+                minLength: 2,
                 select: function( event, ui ) {
-                    log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+                    var keywords=ui.item.value.split(" ");
+                    window.open(site_url+"/admin/fuzzy?keyword="+keywords[0]+"&category_id="+keywords[1]);
                 }
             } );
         } );

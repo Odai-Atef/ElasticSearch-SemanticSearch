@@ -37,7 +37,9 @@ Route::get("/auto_complete", function (Request $request) {
     $data = [];
     if (isset($data_fuzzy['aggregations']['my-agg-name']['buckets'])) {
         foreach ($data_fuzzy['aggregations']['my-agg-name']['buckets'] as $categri) {
-            $data[] = $_GET["keyword"] . " in category_" . $categri['key'] . "(" . $categri['doc_count'] . ")";
+//            $data[] = $_GET["keyword"] . " in category_" . $categri['key'] . "(" . $categri['doc_count'] . ")";
+            $data[] = $_GET["keyword"] . " " . $categri['key'] ;
+
         }
     }
     return json_encode($data);
