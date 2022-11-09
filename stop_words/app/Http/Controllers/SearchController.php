@@ -21,7 +21,7 @@ class SearchController extends Controller
                                     "product_description"
                                 ],
                                 "query" => trim($_GET['keyword']) . " AND !($stop_words)",
-                                "fuzziness" => "AUTO"
+                                "fuzziness" => "1"
                             ]
                         ],
                         [
@@ -69,7 +69,7 @@ class SearchController extends Controller
                     "query_string" => [
                         "fields" => ["product_name", "product_description"],
                         "query" => trim($_GET['keyword']) . " AND !($stop_words)",
-                        "fuzziness" => "AUTO"
+                        "fuzziness" => "1"
                     ],
                 ],
                 "_source" => [

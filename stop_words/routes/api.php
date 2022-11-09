@@ -30,7 +30,7 @@ Route::get("/auto_complete", function (Request $request) {
             "query_string" => [
                 "fields" => ["product_name", "product_description", "brand_name", "option_description"],
                 "query" => trim($_GET['keyword']) . " AND !($stop_words)",
-                "fuzziness" => "AUTO"
+                "fuzziness" => "1"
             ]
         ]
     ]);

@@ -245,7 +245,7 @@ class AdminStopWordsController extends \crocodicstudio\crudbooster\controllers\C
                 "query_string" => [
                     "fields" => ["product_name", "product_description"],
                     "query" => $stop_words,
-                    "fuzziness" => "AUTO"
+                    "fuzziness" => "1"
                 ],
             ],
             "_source" => [
