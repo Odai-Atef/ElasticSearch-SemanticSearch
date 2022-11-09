@@ -230,10 +230,9 @@ class AdminStopWordsController extends \crocodicstudio\crudbooster\controllers\C
     }
 
 
-
-    public function getStopTweets()
+    public function getStopTweets($validate = true)
     {
-        if (CRUDBooster::myId()==null ) {
+        if (CRUDBooster::myId() == null && $validate) {
             return CRUDBooster::redirect(url("/admin"), cbLang('denied_access'));
         }
         $data = [];
@@ -261,6 +260,9 @@ class AdminStopWordsController extends \crocodicstudio\crudbooster\controllers\C
                 ]
             ]
         ]);
+        if ($validate == false) {
+            return $data;
+        }
         return $this->view('products', $data);
     }
 
