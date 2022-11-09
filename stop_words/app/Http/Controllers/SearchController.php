@@ -26,7 +26,7 @@ class SearchController extends Controller
                         ],
                         [
                             "match" => [
-                                "category_id" => $category_id
+                                "category_name" => $category_id
                             ]
                         ]
                     ]

@@ -29,7 +29,7 @@ Route::get("/auto_complete", function (Request $request) {
         "aggs" => [
             "my-agg-name" => [
                 "terms" => [
-                    "field" => "category_id"
+                    "field" => "category_name.keyword"
                 ]
             ]
         ],
@@ -45,7 +45,7 @@ Route::get("/auto_complete", function (Request $request) {
     if (isset($data_fuzzy['aggregations']['my-agg-name']['buckets'])) {
         foreach ($data_fuzzy['aggregations']['my-agg-name']['buckets'] as $categri) {
 //            $data[] = $_GET["keyword"] . " in category_" . $categri['key'] . "(" . $categri['doc_count'] . ")";
-            $data[] = $_GET["keyword"] . " " . $categri['key'] ;
+            $data[] = $_GET["keyword"] . " في " . $categri['key'] ;
 
         }
     }

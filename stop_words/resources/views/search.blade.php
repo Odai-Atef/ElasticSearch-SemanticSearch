@@ -8,7 +8,17 @@
                 </div>
         </form>
         <div class="table-responsive">
-            <h4 class="text-right"> (<?php echo number_format($data_fuzzy['hits']['total']['value'] ?? 0); ?>) نتائج البحث</h4>
+            <h4 class="text-right">
+
+                (<?php echo number_format($data_fuzzy['hits']['total']['value'] ?? 0); ?>)
+                <b>
+                    {{isset($_GET['keyword'])?$_GET['keyword']:""}}
+                </b>
+                في
+                <b>
+                    {{isset($_GET['category_id'])?$_GET['category_id']:""}}
+                </b>
+                 نتائج البحث</h4>
             <table class="table table-striped table-bordered text-right" width="100%">
                 <tbody>
                 <?php
@@ -57,7 +67,7 @@
                 },
                 minLength: 2,
                 select: function( event, ui ) {
-                    var keywords=ui.item.value.split(" ");
+                    var keywords=ui.item.value.split(" في ");
                     window.open(site_url+"/admin/fuzzy?keyword="+keywords[0]+"&category_id="+keywords[1]);
                 }
             } );
