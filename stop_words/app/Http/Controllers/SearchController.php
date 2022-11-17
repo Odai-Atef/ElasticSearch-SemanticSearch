@@ -44,7 +44,7 @@ class SearchController extends Controller
 
     function mapping($request)
     {
-        $map_text = ["category_id", "tags", "store_id"];
+        $map_text = ["category_name", "tags", "store_id"];
         foreach ($map_text as $keyword) {
             if ($request->query($keyword)) {
                 $this->filter_by_text($keyword, $request->query($keyword));
