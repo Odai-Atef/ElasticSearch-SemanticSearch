@@ -5,6 +5,7 @@ use Illuminate\Support\Arr;
 function postReq($data)
 {
     $data = json_encode($data);
+
     // echo $data."</br>";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, "http://" . env("ES_HOST") . ":" . env("ES_PORT") . "/" . env("ES_INDEX") . "/_search?scroll=1m");
