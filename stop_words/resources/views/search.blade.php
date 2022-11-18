@@ -6,6 +6,20 @@
                 <input id="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : "" ?>" name="keyword"
                        type="text" class="search-query form-control col-12" placeholder="Search"/>
             </div>
+            <div class="input-group" style="width: 100%;margin-bottom: 40px">
+
+                <input type="number" name="store_id" class="col-3" placeholder="Store ID"
+                       value="{{$_GET['store_id']?$_GET['store_id']:""}}"/>
+                <input type="number" name="min_price" class="col-3" placeholder="Min Price"
+                       value="{{$_GET['min_price']?$_GET['min_price']:""}}"/>
+                <input type="number" name="max_price" class="col-3" placeholder="Max Price"
+                       value="{{$_GET['max_price']?$_GET['max_price']:""}}"/>
+                <input type="number" name="min_rating" class="col-3" placeholder="Min Rating"
+                       value="{{$_GET['min_rating']?$_GET['min_rating']:""}}"/>
+                <input type="number" name="max_rating" class="col-3" placeholder="Max Rating"
+                       value="{{$_GET['max_rating']?$_GET['max_rating']:""}}"/>
+            </div>
+            <button type="submit">Submit</button>
         </form>
         <div class="table-responsive">
             <h4 class="text-right">
@@ -38,7 +52,12 @@
                         <h3>
                             <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ?>
                         </h3>
-                        <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_description'])) ?></p>
+                        <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['description'][0]['text'])) ?></p>
+                        <small>Price: {{$tweet['_source']['price']}} SAR</small>
+                        <br/>
+                        <small>Rating: {{$tweet['_source']['rating']}} / 5</small>
+                        <br/>
+                        <small>Store ID: {{$tweet['_source']['store_id']}}</small>
                     </td>
                 </tr>
                 <?php } else {
