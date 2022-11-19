@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get("/aggs/categories","AggsController@categories");
+Route::get("/aggs/variants","AggsController@variants");
+
 Route::get("/update",function (){
     $data=json_decode(file_get_contents("http://".env("ES_HOST").":".env("ES_PORT")."/".env("ES_INDEX")."/_search?scroll=1m"),true);
     \Illuminate\Support\Facades\DB::table("cms_settings")->where("name","=","number_of_products")->update(["content"=>$data['hits']['total']['value']]);

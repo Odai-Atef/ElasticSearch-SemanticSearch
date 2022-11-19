@@ -10,6 +10,8 @@
 
                 <input type="number" name="store_id" class="col-3" placeholder="Store ID"
                        value="{{$_GET['store_id']?$_GET['store_id']:""}}"/>
+                <input type="text" name="tags" class="col-3" placeholder="Tags"
+                       value="{{$_GET['tags']?$_GET['tags']:""}}"/>
                 <input type="number" name="min_price" class="col-3" placeholder="Min Price"
                        value="{{$_GET['min_price']?$_GET['min_price']:""}}"/>
                 <input type="number" name="max_price" class="col-3" placeholder="Max Price"
@@ -18,6 +20,22 @@
                        value="{{$_GET['min_rating']?$_GET['min_rating']:""}}"/>
                 <input type="number" name="max_rating" class="col-3" placeholder="Max Rating"
                        value="{{$_GET['max_rating']?$_GET['max_rating']:""}}"/>
+                <select class="col-3" name="categories_name_text_keyword">
+                    <option></option>
+                    @foreach($categories as $category)
+                        <option
+                            {{$_GET['categories_name_text_keyword']==$category?"selected":""}} value="{{$category}}">{{$category}}</option>
+                    @endforeach
+                </select>
+                <select class="col-3" name="variants_details_attribute">
+                    <option></option>
+                    @foreach($variants_data as $variant)
+                        <option
+                            {{$_GET['variants_details_attribute']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
+                    @endforeach
+                </select>
+                <input type="text" name="variants_details_value" class="col-3" placeholder="Variant Value"
+                       value="{{$_GET['variants_details_value']?$_GET['variants_details_value']:""}}"/>
             </div>
             <button type="submit">Submit</button>
         </form>
@@ -58,6 +76,17 @@
                         <small>Rating: {{$tweet['_source']['rating']}} / 5</small>
                         <br/>
                         <small>Store ID: {{$tweet['_source']['store_id']}}</small>
+                        <br/>
+                        <small>Category: {{$tweet['_source']['categories'][0]['name'][0]['text']}}</small>
+                        <br/>
+                        <small>Tags: {{is_array($tweet['_source']['tags'])??implode(",",$tweet['_source']['tags'])}}</small>
+                        <br/>
+                        <small>Variants:
+                            @foreach($tweet["_source"]['variants'] as $vv)
+                                @foreach($vv['details'] as $v)
+                                   <b> {{$v['attribute']}}:{{$v['value']}}</b>
+                                @endforeach
+                            @endforeach
                     </td>
                 </tr>
                 <?php } else {

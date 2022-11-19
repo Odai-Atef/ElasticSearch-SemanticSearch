@@ -44,12 +44,17 @@ class SearchController extends Controller
 
     function mapping($request)
     {
-        $map_text = ["category_name", "tags", "store_id"];
+        $map_text = ["variants_details_value"=>"variants.details.value","categories_name_text_keyword"=>"categories.name.text.keyword","tags", "store_id","tags"];
         $map_min = ["min_price", "min_rating"];
         $map_max = ["max_price", "max_rating"];
-        foreach ($map_text as $keyword) {
-            if ($request->query($keyword)) {
-                $this->filter_by_text($keyword, $request->query($keyword));
+        foreach ($map_text as $key=> $keyword) {
+            if(is_numeric($key)){
+                $map_key=$keyword;
+            }else{
+                $map_key=$key;
+            }
+            if ($request->query($map_key)) {
+                $this->filter_by_text($keyword, $request->query($map_key));
             }
         }
         foreach ($map_min as $keyword) {
@@ -155,9 +160,12 @@ class SearchController extends Controller
         if ($keyword == "") {
             unset($this->query["query"]["bool"]["must"][0]);
         }
+        $aggs=new AggsController();
         $this->query["query"]["bool"]["must"]=array_values($this->query["query"]["bool"]["must"]);
         $data['data_fuzzy'] = postReq($this->query);
         $data["suggestions"] = $this->suggest($keyword);
+        $data['categories']=$aggs->categories();
+        $data['variants_data']=$aggs->variants();
         return view('search', $data);
     }
 }
