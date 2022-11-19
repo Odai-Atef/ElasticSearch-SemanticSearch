@@ -29,7 +29,7 @@ Route::get("/auto_complete", function (Request $request) {
         "aggs" => [
             "my-agg-name" => [
                 "terms" => [
-                    "field" => "category_name.keyword"
+                    "field" => "categories.name.text.keyword"
                 ]
             ]
         ],
