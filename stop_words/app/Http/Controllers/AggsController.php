@@ -50,6 +50,22 @@ class AggsController extends Controller
         $data_fuzzy = postReq($this->query);
         return $this->getData($data_fuzzy);
     }
+    function stores($keyword){
+        $this->setField("store_id");
+        if($keyword!=""){
+            $this->withFilter($keyword);
+        }
+        $data_fuzzy = postReq($this->query);
+        return $this->getData($data_fuzzy);
+    }
+    function tags_values($keyword){
+        $this->setField("tags.keyword");
+        if($keyword!=""){
+            $this->withFilter($keyword);
+        }
+        $data_fuzzy = postReq($this->query);
+        return $this->getData($data_fuzzy);
+    }
 
     function variants($keyword)
     {

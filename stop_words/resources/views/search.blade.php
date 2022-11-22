@@ -1,49 +1,121 @@
 @extends('crudbooster::admin_template')
 @section('content')
+
     <div class="col-12">
         <form method="get">
-            <div class="input-group" style="width: 100%;margin-bottom: 40px">
-                <input id="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : "" ?>" name="keyword"
-                       type="text" class="search-query form-control col-12" placeholder="Search"/>
-            </div>
-            <div class="input-group" style="width: 100%;margin-bottom: 40px">
+            <div class="input-group margin-bottom">
+                <div class="row ">
+                    <div class="col-sm-12 margin-bottom">
+                        <div class="form-group">
+                            <label for="">Search For</label>
+                            <input id="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : "" ?>"
+                                   name="keyword"
+                                   type="text" class="form-control " placeholder="ex: iphone"/>
+                        </div>
+                    </div>
+                    <div class="row margin-bottom">
+                        <div class="col-sm-12">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="">Tags</label>
+                                    <select class="form-control" name="tags">
+                                        <option>Tags</option>
+                                        @foreach($tags as $tag)
+                                            <option
+                                                {{$_GET['tags']==$tag?"selected":""}} value="{{$tag}}">{{$tag}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="">Categories</label>
+                                    <select class="form-control" name="categories_name_text_keyword">
+                                        <option>Categories</option>
+                                        @foreach($categories as $category)
+                                            <option
+                                                {{$_GET['categories_name_text_keyword']==$category?"selected":""}} value="{{$category}}">{{$category}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="">Variants</label>
+                                    <select class="form-control" name="variants_details_attribute">
+                                        <option>Variant</option>
+                                        @foreach($variants_data as $variant)
+                                            <option
+                                                {{$_GET['variants_details_attribute']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="">Variants Value</label>
+                                    <select class="form-control" name="variants_details_value">
+                                        <option>Variant Value</option>
+                                        @foreach($variants_value_data as $variant)
+                                            <option
+                                                {{$_GET['variants_details_value']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <input type="number" name="store_id" class="col-3" placeholder="Store ID"
-                       value="{{$_GET['store_id']?$_GET['store_id']:""}}"/>
-                <input type="text" name="tags" class="col-3" placeholder="Tags"
-                       value="{{$_GET['tags']?$_GET['tags']:""}}"/>
-                <input type="number" name="min_price" class="col-3" placeholder="Min Price"
-                       value="{{$_GET['min_price']?$_GET['min_price']:""}}"/>
-                <input type="number" name="max_price" class="col-3" placeholder="Max Price"
-                       value="{{$_GET['max_price']?$_GET['max_price']:""}}"/>
-                <input type="number" name="min_rating" class="col-3" placeholder="Min Rating"
-                       value="{{$_GET['min_rating']?$_GET['min_rating']:""}}"/>
-                <input type="number" name="max_rating" class="col-3" placeholder="Max Rating"
-                       value="{{$_GET['max_rating']?$_GET['max_rating']:""}}"/>
-                <select class="col-3" name="categories_name_text_keyword">
-                    <option></option>
-                    @foreach($categories as $category)
-                        <option
-                            {{$_GET['categories_name_text_keyword']==$category?"selected":""}} value="{{$category}}">{{$category}}</option>
-                    @endforeach
-                </select>
-                <select class="col-3" name="variants_details_attribute">
-                    <option></option>
-                    @foreach($variants_data as $variant)
-                        <option
-                            {{$_GET['variants_details_attribute']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
-                    @endforeach
-                </select>
-                <select class="col-3" name="variants_details_value">
-                    <option>Variant Value</option>
-                    @foreach($variants_value_data as $variant)
-                        <option
-                            {{$_GET['variants_details_value']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
-                    @endforeach
-                </select>
+                    <div class="row margin-bottom">
+                        <div class="col-sm-12">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Store</label>
+                                    <select class="form-control" name="store_id">
+                                        <option>Store</option>
+                                        @foreach($stores as $store)
+                                            <option
+                                                {{$_GET['store_id']==$store?"selected":""}} value="{{$store}}">{{$store}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Min Price</label>
+                                    <input type="number" name="min_price"
+                                           value="{{$_GET['min_price']?$_GET['min_price']:""}}" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Max Price</label>
+                                    <input type="number" class="form-control" name="max_price"
+                                           value="{{$_GET['max_price']?$_GET['max_price']:""}}"/>
+                                </div>
+                            </div>
 
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Min Rating</label>
+                                    <input type="number" class="form-control" name="min_rating"
+                                           value="{{$_GET['min_rating']?$_GET['min_rating']:""}}"/>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="">Max Rating</label>
+                                    <input type="number" class="form-control" name="max_rating"
+                                           value="{{$_GET['max_rating']?$_GET['max_rating']:""}}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="col-sm-12 btn btn-sm btn-primary"><i class="fa fa-search"></i> Search
+                </button>
             </div>
-            <button type="submit">Submit</button>
         </form>
         <div class="table-responsive">
             <h4 class="text-right">
@@ -90,9 +162,9 @@
                         <small>Variants:
                             @foreach($product["_source"]['variants'] as $vv)
                                 @foreach($vv['details'] as $v)
-                                   <b> {{$v['attribute']}}:{{$v['value']}} </b>
-                                @endforeach
-                            @endforeach
+                                    <b> {{$v['attribute']}}:{{$v['value']}} </b>
+                        @endforeach
+                        @endforeach
                     </td>
                 </tr>
                 <?php } else {
@@ -109,6 +181,11 @@
 @endsection
 
 @push("bottom")
+    <style>
+        .margin-bottom {
+            margin-bottom: 20px;
+        }
+    </style>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>

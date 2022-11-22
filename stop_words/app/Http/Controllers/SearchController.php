@@ -167,6 +167,8 @@ class SearchController extends Controller
         $data['categories']=$aggs->categories($keyword);
         $data['variants_data']=$aggs->variants($keyword);
         $data['variants_value_data']=$aggs->variants_values($keyword);
+        $data['stores']=$aggs->stores($keyword);
+        $data['tags']=$aggs->tags_values($keyword);
 
         return view('search', $data);
     }
