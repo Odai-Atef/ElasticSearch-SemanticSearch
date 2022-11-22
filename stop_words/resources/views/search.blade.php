@@ -79,12 +79,12 @@
                         <br/>
                         <small>Category: {{$tweet['_source']['categories'][0]['name'][0]['text']}}</small>
                         <br/>
-                        <small>Tags: {{is_array($tweet['_source']['tags'])??implode(",",$tweet['_source']['tags'])}}</small>
+                        <small>Tags: {{is_array($tweet['_source']['tags'])?implode(",",$tweet['_source']['tags']):""}}</small>
                         <br/>
                         <small>Variants:
                             @foreach($tweet["_source"]['variants'] as $vv)
                                 @foreach($vv['details'] as $v)
-                                   <b> {{$v['attribute']}}:{{$v['value']}}</b>
+                                   <b> {{$v['attribute']}}:{{$v['value']}} </b>
                                 @endforeach
                             @endforeach
                     </td>
