@@ -23,6 +23,15 @@ class AggsController extends Controller
     {
         $this->query['aggs']['my-agg-name']['terms']['field'] = $field;
     }
+    function withFilter($words){
+       $this->query["query"] = [
+            "query_string" => [
+                "fields" => ["name.text", "description.text"],
+                "query" => $words,
+                "fuzziness" => "1"
+            ]
+        ];
+    }
 
     function getData($data_fuzzy)
     {
@@ -32,16 +41,31 @@ class AggsController extends Controller
         return [];
     }
 
-    function categories()
+    function categories($keyword)
     {
         $this->setField("categories.name.text.keyword");
+        if($keyword!=""){
+            $this->withFilter($keyword);
+        }
         $data_fuzzy = postReq($this->query);
         return $this->getData($data_fuzzy);
     }
 
-    function variants()
+    function variants($keyword)
     {
         $this->setField("variants.details.attribute.keyword");
+        if($keyword!=""){
+            $this->withFilter($keyword);
+        }
+        $data_fuzzy = postReq($this->query);
+        return $this->getData($data_fuzzy);
+    }
+    function variants_values($keyword)
+    {
+        $this->setField("variants.details.value.keyword");
+        if($keyword!=""){
+            $this->withFilter($keyword);
+        }
         $data_fuzzy = postReq($this->query);
         return $this->getData($data_fuzzy);
     }

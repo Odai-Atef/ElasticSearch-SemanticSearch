@@ -164,8 +164,10 @@ class SearchController extends Controller
         $this->query["query"]["bool"]["must"]=array_values($this->query["query"]["bool"]["must"]);
         $data['data_fuzzy'] = postReq($this->query);
         $data["suggestions"] = $this->suggest($keyword);
-        $data['categories']=$aggs->categories();
-        $data['variants_data']=$aggs->variants();
+        $data['categories']=$aggs->categories($keyword);
+        $data['variants_data']=$aggs->variants($keyword);
+        $data['variants_value_data']=$aggs->variants_values($keyword);
+
         return view('search', $data);
     }
 }

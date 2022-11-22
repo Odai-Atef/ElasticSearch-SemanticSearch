@@ -34,8 +34,14 @@
                             {{$_GET['variants_details_attribute']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
                     @endforeach
                 </select>
-                <input type="text" name="variants_details_value" class="col-3" placeholder="Variant Value"
-                       value="{{$_GET['variants_details_value']?$_GET['variants_details_value']:""}}"/>
+                <select class="col-3" name="variants_details_value">
+                    <option>Variant Value</option>
+                    @foreach($variants_value_data as $variant)
+                        <option
+                            {{$_GET['variants_details_value']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
+                    @endforeach
+                </select>
+
             </div>
             <button type="submit">Submit</button>
         </form>
@@ -63,26 +69,26 @@
                 <tbody>
                 <?php
                 if (isset($data_fuzzy['hits']['hits']))
-                foreach ($data_fuzzy['hits']['hits'] as $tweet) {
+                foreach ($data_fuzzy['hits']['hits'] as $product) {
                 ?>
                 <tr>
                     <td>
                         <h3>
-                            <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['product_name'])) ?>
+                            <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($product['_source']['product_name'])) ?>
                         </h3>
-                        <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($tweet['_source']['description'][0]['text'])) ?></p>
-                        <small>Price: {{$tweet['_source']['price']}} SAR</small>
+                        <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($product['_source']['description'][0]['text'])) ?></p>
+                        <small>Price: {{$product['_source']['price']}} SAR</small>
                         <br/>
-                        <small>Rating: {{$tweet['_source']['rating']}} / 5</small>
+                        <small>Rating: {{$product['_source']['rating']}} / 5</small>
                         <br/>
-                        <small>Store ID: {{$tweet['_source']['store_id']}}</small>
+                        <small>Store ID: {{$product['_source']['store_id']}}</small>
                         <br/>
-                        <small>Category: {{$tweet['_source']['categories'][0]['name'][0]['text']}}</small>
+                        <small>Category: {{$product['_source']['categories'][0]['name'][0]['text']}}</small>
                         <br/>
-                        <small>Tags: {{is_array($tweet['_source']['tags'])?implode(",",$tweet['_source']['tags']):""}}</small>
+                        <small>Tags: {{is_array($product['_source']['tags'])?implode(",",$product['_source']['tags']):""}}</small>
                         <br/>
                         <small>Variants:
-                            @foreach($tweet["_source"]['variants'] as $vv)
+                            @foreach($product["_source"]['variants'] as $vv)
                                 @foreach($vv['details'] as $v)
                                    <b> {{$v['attribute']}}:{{$v['value']}} </b>
                                 @endforeach
