@@ -24,10 +24,11 @@ class AggsController extends Controller
         $this->query['aggs']['my-agg-name']['terms']['field'] = $field;
     }
     function withFilter($words){
-       $this->query["query"] = [
+        $stop_words = getStopWords();
+        $this->query["query"] = [
             "query_string" => [
                 "fields" => ["name.text", "description.text"],
-                "query" => $words,
+                "query" => "$words AND !($stop_words)",
                 "fuzziness" => "1"
             ]
         ];

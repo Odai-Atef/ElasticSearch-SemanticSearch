@@ -15,7 +15,7 @@
                     </div>
                     <div class="row margin-bottom">
                         <div class="col-sm-12">
-                            @if($tags)
+                            @if($tags || true)
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="">Tags</label>
@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                             @endif
-                            @if($categories)
+                            @if($categories || true)
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="">Categories</label>
@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                             @endif
-                            @if($variants_data)
+                            @if($variants_data || true)
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="">Variants</label>
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                             @endif
-                            @if($variants_value_data)
+                            @if($variants_value_data || true)
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="">Variants Value</label>

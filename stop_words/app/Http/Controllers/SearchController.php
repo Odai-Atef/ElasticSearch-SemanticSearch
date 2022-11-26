@@ -21,12 +21,12 @@ class SearchController extends Controller
                             "field" => "description.text.keyword"
                         ]
                     ],
-                    /*        "my-suggestion-title" => [
+                            "my-suggestion-title" => [
                                 "text" => "$keyword",
                                 "term" => [
-                                    "field" => "product_name.keyword"
+                                    "field" => "name.text.keyword"
                                 ]
-                            ]*/
+                            ]
                 ]
             ]
         );
