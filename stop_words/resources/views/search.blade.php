@@ -3,7 +3,7 @@
 
     <div class="col-12">
         <form method="get">
-            <div class="input-group margin-bottom">
+            <div class="margin-bottom">
                 <div class="row ">
                     <div class="col-sm-12 margin-bottom">
                         <div class="form-group">
@@ -15,54 +15,62 @@
                     </div>
                     <div class="row margin-bottom">
                         <div class="col-sm-12">
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="">Tags</label>
-                                    <select class="form-control" name="tags">
-                                        <option>Tags</option>
-                                        @foreach($tags as $tag)
-                                            <option
-                                                {{$_GET['tags']==$tag?"selected":""}} value="{{$tag}}">{{$tag}}</option>
-                                        @endforeach
-                                    </select>
+                            @if($tags)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="">Tags</label>
+                                        <select class="form-control" name="tags">
+                                            <option value="">Tags</option>
+                                            @foreach($tags as $tag)
+                                                <option
+                                                    {{$_GET['tags']==$tag?"selected":""}} value="{{$tag}}">{{$tag}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="">Categories</label>
-                                    <select class="form-control" name="categories_name_text_keyword">
-                                        <option>Categories</option>
-                                        @foreach($categories as $category)
-                                            <option
-                                                {{$_GET['categories_name_text_keyword']==$category?"selected":""}} value="{{$category}}">{{$category}}</option>
-                                        @endforeach
-                                    </select>
+                            @endif
+                            @if($categories)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="">Categories</label>
+                                        <select class="form-control" name="categories_name_text_keyword">
+                                            <option value="">Categories</option>
+                                            @foreach($categories as $category)
+                                                <option
+                                                    {{$_GET['categories_name_text_keyword']==$category?"selected":""}} value="{{$category}}">{{$category}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="">Variants</label>
-                                    <select class="form-control" name="variants_details_attribute">
-                                        <option>Variant</option>
-                                        @foreach($variants_data as $variant)
-                                            <option
-                                                {{$_GET['variants_details_attribute']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
-                                        @endforeach
-                                    </select>
+                            @endif
+                            @if($variants_data)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="">Variants</label>
+                                        <select class="form-control" name="variants_details_attribute">
+                                            <option value="">Variant</option>
+                                            @foreach($variants_data as $variant)
+                                                <option
+                                                    {{$_GET['variants_details_attribute']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="">Variants Value</label>
-                                    <select class="form-control" name="variants_details_value">
-                                        <option>Variant Value</option>
-                                        @foreach($variants_value_data as $variant)
-                                            <option
-                                                {{$_GET['variants_details_value']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
-                                        @endforeach
-                                    </select>
+                            @endif
+                            @if($variants_value_data)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="">Variants Value</label>
+                                        <select class="form-control" name="variants_details_value">
+                                            <option value="">Variant Value</option>
+                                            @foreach($variants_value_data as $variant)
+                                                <option
+                                                    {{$_GET['variants_details_value']==$variant?"selected":""}} value="{{$variant}}">{{$variant}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
 
@@ -72,7 +80,7 @@
                                 <div class="form-group">
                                     <label for="">Store</label>
                                     <select class="form-control" name="store_id">
-                                        <option>Store</option>
+                                        <option value="">Store</option>
                                         @foreach($stores as $store)
                                             <option
                                                 {{$_GET['store_id']==$store?"selected":""}} value="{{$store}}">{{$store}}</option>
@@ -117,6 +125,7 @@
                 </button>
             </div>
         </form>
+        <div class="clearfix"></div>
         <div class="table-responsive">
             <h4 class="text-right">
 
@@ -131,10 +140,12 @@
                 نتائج البحث</h4>
             @if(count($suggestions)>0)
                 <p class="text-right">
-                    هل تقصد
                     @foreach($suggestions as $suggest)
-                        <a href="{{url("/admin/fuzzy?keyword=".$suggest)}}">{{$suggest}}</a>
+                        <span class="badge  badge-success" >
+                          <a style="color: white" href="{{url("/admin/fuzzy?keyword=".$suggest)}}">{{$suggest}}</a>
+                        </span>
                     @endforeach
+                        هل تقصد
                 </p>
             @endif
             <table class="table table-striped table-bordered text-right" width="100%">
@@ -162,7 +173,7 @@
                         <small>Variants:
                             @foreach($product["_source"]['variants'] as $vv)
                                 @foreach($vv['details'] as $v)
-                                    <b> {{$v['attribute']}}:{{$v['value']}} </b>
+                                    <span class="badge badge-success"> {{$v['attribute']}}:{{$v['value']}} </span>
                         @endforeach
                         @endforeach
                     </td>
