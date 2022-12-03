@@ -1,374 +1,350 @@
 {
-	"mappings": {
-		"properties": {
-
-			"active_advance": {
-				"type": "boolean"
-			},
-			"brand_id": {
-				"type": "keyword"
-			},
-			"full_text": {
-				"type": "nested",
-				"properties": {
-					"lang": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-					},
-					"vector": {
-						"type": "dense_vector",
-						"dims": 512
-					},
-					"text": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-					}
-				}
-			},
-			"brand_name": {
-				"type": "nested",
-				"properties": {
-					"lang": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-					},
-					"vector": {
-						"type": "dense_vector",
-						"dims": 512
-					},
-					"text": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-
-
-					}
-
-				}
-			},
-			"categories": {
-				"properties": {
-					"id": {
-						"type": "keyword"
-					},
-					"name": {
-						"type": "nested",
-						"properties": {
-							"lang": {
-								"type": "text",
-								"fields": {
-									"keyword": {
-										"type": "keyword"
-									}
-								}
-							},
-							"vector": {
-								"type": "dense_vector",
-								"dims": 512
-							},
-							"text": {
-								"type": "text",
-								"fields": {
-									"keyword": {
-										"type": "keyword"
-									}
-								}
-
-
-							}
-
-						}
-					}
-				}
-			},
-			"created_at": {
-				"type": "integer"
-			},
-			"currency": {
-				"type": "keyword"
-			},
-			"custom_facets": {
-				"type": "nested",
-				"properties": {
-					"name": {
-						"type": "keyword"
-					},
-					"slug": {
-						"type": "keyword"
-					},
-					"values": {
-						"type": "keyword"
-					}
-				}
-			},
-			"description": {
-
-				"type": "nested",
-				"properties": {
-					"lang": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-					},
-					"vector": {
-						"type": "dense_vector",
-						"dims": 512
-					},
-					"text": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-					}
-				}
-
-			},
-			"fake_id": {
-				"type": "keyword"
-			},
-			"id": {
-				"type": "keyword"
-			},
-			"image": {
-				"type": "text",
-				"index": false
-			},
-			"sku": {
-				"type": "text"
-			},
-			"sku_id": {
-				"type": "integer"
-			},
-			"minimum_order_time": {
-				"type": "integer"
-			},
-			"name": {
-
-				"type": "nested",
-				"properties": {
-					"lang": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-					},
-					"vector": {
-						"type": "dense_vector",
-						"dims": 512
-					},
-					"text": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-
-
-					}
-				}
-			},
-			"pinned": {
-				"type": "boolean"
-			},
-			"pinned_date": {
-				"type": "integer"
-			},
-			"price": {
-				"type": "float"
-			},
-			"price_to_show": {
-				"type": "float"
-			},
-			"promotion_title": {
-
-				"type": "nested",
-				"properties": {
-					"lang": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-					},
-					"vector": {
-						"type": "dense_vector",
-						"dims": 512
-					},
-					"text": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-
-
-					}
-				}
-			},
-			"quantity": {
-				"type": "integer"
-			},
-			"rating": {
-				"type": "keyword"
-			},
-			"sale_end": {
-				"type": "date",
-				"format": "yyyy-MM-dd"
-			},
-			"sale_price": {
-				"type": "float"
-			},
-			"show_in_app": {
-				"type": "boolean"
-			},
-
-			"sold_quantity": {
-				"type": "integer"
-			},
-			"sort": {
-				"type": "integer"
-			},
-			"status": {
-				"type": "keyword"
-			},
-			"store_id": {
-				"type": "keyword"
-			},
-			"subtitle": {
-
-				"type": "nested",
-				"properties": {
-					"lang": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-					},
-					"vector": {
-						"type": "dense_vector",
-						"dims": 512
-					},
-					"text": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-
-
-					}
-				}
-			},
-			"tags": {
-				"type": "text"
-			},
-			"type": {
-				"type": "keyword"
-			},
-			"updated_at": {
-				"type": "integer"
-			},
-			"url": {
-				"type": "text",
-				"index": false
-			},
-			"variants": {
-
-				"type": "nested",
-				"properties": {
-					"lang": {
-						"type": "text",
-						"fields": {
-							"keyword": {
-								"type": "keyword"
-							}
-						}
-					},
-					"attribute": {
-						"type": "keyword"
-					},
-					"slug": {
-						"type": "keyword"
-					},
-					"value": {
-						"type": "keyword"
-					}
-
-				}
-
-			},
-
-			"sv": {
-				"type": "nested",
-				"properties": {
-					"attribute": {
-						"type": "keyword"
-					},
-					"slug": {
-						"type": "keyword"
-					},
-					"value": {
-						"type": "keyword"
-					}
-				}
-			},
-			"th": {
-				"type": "nested",
-				"properties": {
-					"attribute": {
-						"type": "keyword"
-					},
-					"slug": {
-						"type": "keyword"
-					},
-					"value": {
-						"type": "keyword"
-					}
-				}
-			},
-			"tr": {
-				"type": "nested",
-				"properties": {
-					"attribute": {
-						"type": "keyword"
-					},
-					"slug": {
-						"type": "keyword"
-					},
-					"value": {
-						"type": "keyword"
-					}
-				}
-			}
-		}
-	}
-
+  "mappings": {
+    "properties": {
+      "active_advance": {
+        "type": "boolean"
+      },
+      "brand_id": {
+        "type": "keyword"
+      },
+      "full_text": {
+        "type": "nested",
+        "properties": {
+          "lang": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "vector": {
+            "type": "dense_vector",
+            "dims": 512
+          },
+          "text": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "brand_name": {
+        "type": "nested",
+        "properties": {
+          "lang": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "vector": {
+            "type": "dense_vector",
+            "dims": 512
+          },
+          "text": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "categories": {
+        "properties": {
+          "id": {
+            "type": "keyword"
+          },
+          "name": {
+            "type": "nested",
+            "properties": {
+              "lang": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "vector": {
+                "type": "dense_vector",
+                "dims": 512
+              },
+              "text": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "created_at": {
+        "type": "integer"
+      },
+      "currency": {
+        "type": "keyword"
+      },
+      "custom_facets": {
+        "type": "nested",
+        "properties": {
+          "name": {
+            "type": "keyword"
+          },
+          "slug": {
+            "type": "keyword"
+          },
+          "values": {
+            "type": "keyword"
+          }
+        }
+      },
+      "description": {
+        "type": "nested",
+        "properties": {
+          "lang": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "vector": {
+            "type": "dense_vector",
+            "dims": 512
+          },
+          "text": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "fake_id": {
+        "type": "keyword"
+      },
+      "id": {
+        "type": "keyword"
+      },
+      "image": {
+        "type": "text",
+        "index": false
+      },
+      "sku": {
+        "type": "text"
+      },
+      "sku_id": {
+        "type": "integer"
+      },
+      "minimum_order_time": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "nested",
+        "properties": {
+          "lang": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "vector": {
+            "type": "dense_vector",
+            "dims": 512
+          },
+          "text": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "pinned": {
+        "type": "boolean"
+      },
+      "pinned_date": {
+        "type": "integer"
+      },
+      "price": {
+        "type": "float"
+      },
+      "price_to_show": {
+        "type": "float"
+      },
+      "promotion_title": {
+        "type": "nested",
+        "properties": {
+          "lang": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "vector": {
+            "type": "dense_vector",
+            "dims": 512
+          },
+          "text": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "quantity": {
+        "type": "integer"
+      },
+      "rating": {
+        "type": "keyword"
+      },
+      "sale_end": {
+        "type": "date",
+        "format": "yyyy-MM-dd"
+      },
+      "sale_price": {
+        "type": "float"
+      },
+      "show_in_app": {
+        "type": "boolean"
+      },
+      "sold_quantity": {
+        "type": "integer"
+      },
+      "sort": {
+        "type": "integer"
+      },
+      "status": {
+        "type": "keyword"
+      },
+      "store_id": {
+        "type": "keyword"
+      },
+      "subtitle": {
+        "type": "nested",
+        "properties": {
+          "lang": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "vector": {
+            "type": "dense_vector",
+            "dims": 512
+          },
+          "text": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "tags": {
+        "type": "text"
+      },
+      "type": {
+        "type": "keyword"
+      },
+      "updated_at": {
+        "type": "integer"
+      },
+      "url": {
+        "type": "text",
+        "index": false
+      },
+      "variants": {
+        "type": "nested",
+        "properties": {
+          "lang": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "attribute": {
+            "type": "keyword"
+          },
+          "slug": {
+            "type": "keyword"
+          },
+          "value": {
+            "type": "keyword"
+          }
+        }
+      },
+      "sv": {
+        "type": "nested",
+        "properties": {
+          "attribute": {
+            "type": "keyword"
+          },
+          "slug": {
+            "type": "keyword"
+          },
+          "value": {
+            "type": "keyword"
+          }
+        }
+      },
+      "th": {
+        "type": "nested",
+        "properties": {
+          "attribute": {
+            "type": "keyword"
+          },
+          "slug": {
+            "type": "keyword"
+          },
+          "value": {
+            "type": "keyword"
+          }
+        }
+      },
+      "tr": {
+        "type": "nested",
+        "properties": {
+          "attribute": {
+            "type": "keyword"
+          },
+          "slug": {
+            "type": "keyword"
+          },
+          "value": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  }
 }

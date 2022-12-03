@@ -1,0 +1,88 @@
+{
+  "mappings": {
+    "properties": {
+      "properties": {
+        "customer_id": {
+          "type": "long"
+        },
+        "event_date": {
+          "type": "date",
+          "format": "yyyy-MM-dd"
+        },
+        "event_id": {
+          "type": "long"
+        },
+        "locked": {
+          "type": "float"
+        },
+        "product_description": {
+          "type": "nested",
+          "properties": {
+            "lang": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "vector": {
+              "type": "dense_vector",
+              "dims": 512
+            },
+            "text": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              }
+            }
+          }
+        },
+        "product_id": {
+          "type": "long"
+        },
+        "product_name": {
+          "type": "nested",
+          "properties": {
+            "lang": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "text": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              }
+            }
+          }
+        },
+        "store_city_id": {
+          "type": "long"
+        },
+        "store_country_id": {
+          "type": "long"
+        },
+        "store_id": {
+          "type": "long"
+        },
+        "store_plan": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        }
+      }
+    }
+  }
+}
