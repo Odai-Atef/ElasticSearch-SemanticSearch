@@ -152,7 +152,7 @@ class SearchController extends Controller
 
             "sort" => [
                 [
-                    "_score" => [
+                    $_GET['sort_by'] => [
                         "order" => "desc"
                     ]
                 ]
