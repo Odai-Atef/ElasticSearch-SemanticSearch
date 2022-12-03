@@ -10,7 +10,7 @@
           "format": "yyyy-MM-dd"
         },
         "event_id": {
-          "type": "long"
+          "type": "byte"
         },
         "locked": {
           "type": "float"

@@ -1,0 +1,23 @@
+{
+  "mappings": {
+    "properties": {
+      "children": {
+        "properties": {
+          "children": {
+            "properties": {
+              "son_category_id": {
+                "type": "int"
+              }
+            }
+          },
+          "father_category_id": {
+            "type": "int"
+          }
+        }
+      },
+      "grand_category_id": {
+        "type": "int"
+      }
+    }
+  }
+}
