@@ -138,7 +138,7 @@
                     <div class="form-group">
                         <select class="form-control" name="sort_by">
                             @foreach($sorting as $k=>$v)
-                                <option {{$k==$_GET['sort_by']??"selected"}} value="{{$k}}">{{$v}}</option>
+                                <option {{$k==$_GET['sort_by']?"selected":""}} value="{{$k}}">{{$v}}</option>
                             @endforeach
                         </select>
                     </div>
