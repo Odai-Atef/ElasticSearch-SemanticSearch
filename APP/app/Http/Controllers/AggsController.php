@@ -23,14 +23,21 @@ class AggsController extends Controller
     {
         $this->query['aggs']['my-agg-name']['terms']['field'] = $field;
     }
-    function withFilter($words){
+
+    function withFilter($words)
+    {
         $stop_words = getStopWords();
-        $this->query["query"] = [
-            "query_string" => [
-                "fields" => ["name.text", "description.text"],
-                "query" => "$words AND !($stop_words)",
-                "fuzziness" => "1"
+        $this->query["query"] = ["bool" => [
+            "must" => [
+                [
+                    "query_string" => [
+                        "fields" => ["name.text", "description.text"],
+                        "query" => "$words AND !($stop_words)",
+                        "fuzziness" => "1"
+                    ]
+                ]
             ]
+        ]
         ];
     }
 
@@ -45,23 +52,27 @@ class AggsController extends Controller
     function categories($keyword)
     {
         $this->setField("categories.name.text.keyword");
-        if($keyword!=""){
+        if ($keyword != "") {
             $this->withFilter($keyword);
         }
         $data_fuzzy = postReq($this->query);
         return $this->getData($data_fuzzy);
     }
-    function stores($keyword){
+
+    function stores($keyword)
+    {
         $this->setField("store_id");
-        if($keyword!=""){
+        if ($keyword != "") {
             $this->withFilter($keyword);
         }
         $data_fuzzy = postReq($this->query);
         return $this->getData($data_fuzzy);
     }
-    function tags_values($keyword){
+
+    function tags_values($keyword)
+    {
         $this->setField("tags.keyword");
-        if($keyword!=""){
+        if ($keyword != "") {
             $this->withFilter($keyword);
         }
         $data_fuzzy = postReq($this->query);
@@ -71,16 +82,17 @@ class AggsController extends Controller
     function variants($keyword)
     {
         $this->setField("variants.details.attribute.keyword");
-        if($keyword!=""){
+        if ($keyword != "") {
             $this->withFilter($keyword);
         }
         $data_fuzzy = postReq($this->query);
         return $this->getData($data_fuzzy);
     }
+
     function variants_values($keyword)
     {
         $this->setField("variants.details.value.keyword");
-        if($keyword!=""){
+        if ($keyword != "") {
             $this->withFilter($keyword);
         }
         $data_fuzzy = postReq($this->query);
