@@ -18,13 +18,13 @@ class SearchController extends Controller
                     "my-suggestion-description" => [
                         "text" => "$keyword",
                         "term" => [
-                            "field" => "description.text.keyword"
+                            "field" => "description"
                         ]
                     ],
                     "my-suggestion-title" => [
                         "text" => "$keyword",
                         "term" => [
-                            "field" => "name.text.keyword"
+                            "field" => "name"
                         ]
                     ]
                 ]
@@ -44,7 +44,7 @@ class SearchController extends Controller
 
     function mapping($request)
     {
-        $map_text = ["variants_details_value" => "variants.details.value", "categories_name_text_keyword" => "categories.name.text.keyword", "tags", "store_id", "tags"];
+        $map_text = ["variants_details_value" => "variants.details.value","category_id"=>"category_name","categories_name_text_keyword" => "category_name", "tags", "store_id", "tags"];
         $map_min = ["min_price", "min_rating"];
         $map_max = ["max_price", "max_rating"];
         foreach ($map_text as $key => $keyword) {
@@ -80,47 +80,6 @@ class SearchController extends Controller
         $this->query["query"]['bool']['must'][]['range'][$key][$op] = $value;
     }
 
-    function fuzzy_with_category($stop_words, $category_id)
-    {
-        $query = [
-            "size" => 100,
-            "query" => [
-                "bool" => [
-                    "must" => [
-                        [
-                            "query_string" => [
-                                "fields" => [
-                                    "product_name",
-                                    "product_description"
-                                ],
-                                "query" => trim($_GET['keyword']) . " AND !($stop_words)",
-                                "fuzziness" => "1"
-                            ]
-                        ]
-                    ]
-                ]
-            ],
-            "_source" => [
-                "includes" => [
-                    "product_name",
-                    "product_description",
-                    "product_id",
-                    "category_id"
-                ]
-            ],
-            "sort" => [
-                [
-                    "_score" => [
-                        "order" => "desc"
-                    ]
-                ]
-            ]
-        ];
-        $query = $this->filter_by_text("category_name", $category_id, $query);
-        return postReq($query);
-
-
-    }
 
     function fuzzy(Request $request)
     {
@@ -139,8 +98,8 @@ class SearchController extends Controller
                         [
                             "query_string" => [
                                 "fields" => [
-                                    "name.text",
-                                    "description.text"
+                                    "name",
+                                    "description"
                                 ],
                                 "query" => trim($_GET['keyword']) . " AND !($stop_words)",
                                 "fuzziness" => "1"

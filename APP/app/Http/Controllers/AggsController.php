@@ -31,7 +31,7 @@ class AggsController extends Controller
             "must" => [
                 [
                     "query_string" => [
-                        "fields" => ["name.text", "description.text"],
+                        "fields" => ["name", "description"],
                         "query" => "$words AND !($stop_words)",
                         "fuzziness" => "1"
                     ]
@@ -51,7 +51,7 @@ class AggsController extends Controller
 
     function categories($keyword)
     {
-        $this->setField("categories.name.text.keyword");
+        $this->setField("category_name.keyword");
         if ($keyword != "") {
             $this->withFilter($keyword);
         }

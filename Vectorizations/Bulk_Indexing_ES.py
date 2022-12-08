@@ -34,21 +34,24 @@ def strip_tags(html):
 # Compute embeddings.
 dir_path=r'/var/www/html/Salla/New/'
 dir_path_vector=r'/var/www/html/Salla/vectors/'
+index_name="products33"
 products_data=[]
 for path in os.listdir(dir_path):
     if os.path.isfile(os.path.join(dir_path, path)):
         try:
             file = open(os.path.join(dir_path, path),'r')
             content = json.load(file)
-            for product in content['SELECT smsp.id as product_id, smsp.name as product_name,smsc.id as category_id ,\r\nsmsc.name as category_name,smsp.description as product_description, smsb.name as brand_name\r\nFROM salla_reports.stg_mysql_salla__products smsp \r\nJOIN stg_mysql_salla__product_categories smspc  on stg_mysql_salla__product_categories.product_id = smsp.id \r\nJOIN stg_mysql_salla__categories smsc on stg_mysql_salla__product_categories.category_id = stg_mysql_salla__categories.id \r\nJOIN stg_mysql_salla__brands smsb on smsb.id = smsp.brand_id ']:
+            for product in content['SELECT smsp.id as product_id, smsp.name as name,smsc.id as category_id ,\r\nsmsc.name as category_name,smsp.description as description, smsb.name as brand_name ,\r\nsmsp.price as price, smsp.store_id as store_id ,smsp.`options` as tags, smsp.views as views\r\nFROM salla_reports.stg_mysql_salla__products smsp \r\nJOIN stg_mysql_salla__product_categories smspc  on stg_mysql_salla__product_categories.product_id = smsp.id \r\nJOIN stg_mysql_salla__categories smsc on stg_mysql_salla__product_categories.category_id = stg_mysql_salla__categories.id \r\nJOIN stg_mysql_salla__brands smsb on smsb.id = smsp.brand_id \r\nwhere smsp.store_id in (352660,37064,20919)']:
                 data=product
-                data['product_description']=strip_tags(data['product_description'])
+                data['description']=strip_tags(data['description'])
                 product_id=product['product_id']
-                products_data.append({"index": {"_index": "products3", "_id": product_id}})
+                products_data.append({"index": {"_index":index_name, "_id": product_id}})
                 products_data.append(data)
                 if len(products_data)>=1000:
                     resp = client.bulk(body=products_data)
                     products_data=[]
+            resp = client.bulk(body=products_data)
+            
                     # print(resp)
                 # with io.open(os.path.join(dir_path_vector, str(product_id) +".json"), 'w', encoding='utf-8') as f:
                 #     data={'product_name':product_name,'product_name_vector':product_name_vector,'product_description':product_description,'product_description_vector':product_description_vector,'product_id':product_id}

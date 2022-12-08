@@ -32,13 +32,13 @@ Route::get("/auto_complete", function (Request $request) {
         "aggs" => [
             "my-agg-name" => [
                 "terms" => [
-                    "field" => "categories.name.text.keyword"
+                    "field" => "category_name.keyword"
                 ]
             ]
         ],
         "query" => [
             "query_string" => [
-                "fields" => [ "description.text"],
+                "fields" => [ "description","name"],
                 "query" => trim($_GET['keyword']) . " AND !($stop_words)",
                 "fuzziness" => "1"
             ]
