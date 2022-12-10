@@ -122,6 +122,50 @@ class SearchController extends Controller
 
     }
 
+    function semantic(Request $request)
+    {
+        $keyword = trim($_GET['keyword']);
+        if ($keyword) {
+            $vector = getVector($keyword);
+            $data = [];
+            $stop_words = getStopWords();
+            $data['page_title'] = 'Semantic Search Products';
+
+            $this->query = [
+                "query" => [
+                    "script_score" => [
+                        "query" => [
+                            "match_all" => new \stdClass()
+                        ],
+                        "script" => [
+                            "source" => "cosineSimilarity(params.queryVector, 'product_description_vector')",
+                            "params" => [
+                                "queryVector" =>array_values($vector)
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+            $this->mapping($request);
+            if ($keyword == "") {
+                unset($this->query["query"]["bool"]["must"][0]);
+            }
+            //$this->query["query"]["bool"]["must"] = array_values($this->query["query"]["bool"]["must"]);
+            $data['data_fuzzy'] = postReq($this->query);
+
+        }
+        $aggs = new AggsController();
+        $data["suggestions"] = $this->suggest($keyword);
+        $data['categories'] = $aggs->categories($keyword);
+        $data['variants_data'] = $aggs->variants($keyword);
+        $data['variants_value_data'] = $aggs->variants_values($keyword);
+        $data['stores'] = $aggs->stores($keyword);
+        $data['tags'] = $aggs->tags_values($keyword);
+
+        return view('search', $data);
+
+    }
+
     function fuzzy(Request $request)
     {
         if (CRUDBooster::myId() == null) {

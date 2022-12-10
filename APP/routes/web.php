@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 Route::get('/admin/unwanted_products', "AdminStopWordsController@getStopTweets");
 Route::get('/admin/fuzzy', "SearchController@fuzzy");
+Route::get('/admin/semantic', "SearchController@semantic");

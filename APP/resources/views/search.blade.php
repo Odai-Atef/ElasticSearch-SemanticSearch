@@ -193,12 +193,14 @@
                                 <small>Tags: {{is_array($product['_source']['tags'])?implode(",",$product['_source']['tags']):""}}</small>
                                 <br/>
                                 <small>Variants:
-                                    @foreach($product["_source"]['variants'] as $vv)
-                                        @foreach($vv['details'] as $v)
-                                            <span
-                                                class="badge badge-success"> {{$v['attribute']}}:{{$v['value']}} </span>
+                                    @if(isset($product["_source"]['variants']))
+                                        @foreach($product["_source"]['variants'] as $vv)
+                                            @foreach($vv['details'] as $v)
+                                                <span
+                                                    class="badge badge-success"> {{$v['attribute']}}:{{$v['value']}} </span>
                                 @endforeach
                                 @endforeach
+                                @endif
                             </td>
                         </tr>
                     @endforeach
