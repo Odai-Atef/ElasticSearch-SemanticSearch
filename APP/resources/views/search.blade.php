@@ -130,6 +130,7 @@
                     "_score"=>"Most Relevant",
                     "price"=>"Price",
                     "rating"=>"Rating",
+                    "views"=>"Views"
                     //"_score"=>"Near to me",
                     ];
             @endphp
@@ -179,27 +180,27 @@
                         <tr>
                             <td>
                                 <h3>
-                                    <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($product['_source']['product_name'])) ?>
+                                    <?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($product['_source']['name'])) ?>
                                 </h3>
-                                <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($product['_source']['description'][0]['text'])) ?></p>
+                                <p><?php echo str_replace(strtolower($_GET['keyword']), "<b>" . $_GET['keyword'] . "</b>", strtolower($product['_source']['description'])) ?></p>
                                 <small>Price: {{$product['_source']['price']}} SAR</small>
                                 <br/>
                                 <small>Rating: {{$product['_source']['rating']}} / 5</small>
                                 <br/>
                                 <small>Store ID: {{$product['_source']['store_id']}}</small>
                                 <br/>
-                                <small>Category: {{$product['_source']['categories'][0]['name'][0]['text']}}</small>
+                                <small>Category: {{$product['_source']['category_name']??$product['_source']['category_name']}}</small>
                                 <br/>
                                 <small>Tags: {{is_array($product['_source']['tags'])?implode(",",$product['_source']['tags']):""}}</small>
                                 <br/>
-                                <small>Variants:
-                                    @if(isset($product["_source"]['variants']))
+                                @if(isset($product["_source"]['variants']))
+                                    <small>Variants:
                                         @foreach($product["_source"]['variants'] as $vv)
                                             @foreach($vv['details'] as $v)
                                                 <span
                                                     class="badge badge-success"> {{$v['attribute']}}:{{$v['value']}} </span>
-                                @endforeach
-                                @endforeach
+                                    @endforeach
+                                    @endforeach
                                 @endif
                             </td>
                         </tr>

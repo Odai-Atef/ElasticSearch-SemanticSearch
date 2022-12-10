@@ -24,5 +24,5 @@ function getStopWords()
     return str_replace("+OR+", " OR ", str_replace(" ", "+", implode(" OR ", $words)));
 }
 function getVector($text){
-    return json_decode(file_get_contents(env("VECTOR_API").$text),true);
+    return json_decode(file_get_contents(env("VECTOR_API").urlencode($text)),true);
 }

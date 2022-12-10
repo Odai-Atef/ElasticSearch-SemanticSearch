@@ -132,15 +132,16 @@ class SearchController extends Controller
             $data['page_title'] = 'Semantic Search Products';
 
             $this->query = [
+                "size"=>100,
                 "query" => [
                     "script_score" => [
                         "query" => [
                             "match_all" => new \stdClass()
                         ],
                         "script" => [
-                            "source" => "cosineSimilarity(params.queryVector, 'product_description_vector')",
+                            "source" => "cosineSimilarity(params.queryVector, 'product_name_vector') + 1.0",
                             "params" => [
-                                "queryVector" =>array_values($vector)
+                                "queryVector" =>$vector
                             ]
                         ]
                     ]
