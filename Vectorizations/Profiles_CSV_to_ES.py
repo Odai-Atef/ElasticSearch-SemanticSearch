@@ -26,7 +26,7 @@ with open(csv_path) as csv_file:
     reader = csv.DictReader(csv_file)
     for row in reader:
         counter = counter + 1
-        data.append({"index": {"_index": "profiles22", "_id": row['product_id']}})
+        data.append({"index": {"_index": "profiles22"}})
         data.append(row)
         if counter%500==0:
             resp = client.bulk(body=data)
