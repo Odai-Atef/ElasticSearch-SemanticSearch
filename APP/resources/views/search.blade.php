@@ -13,7 +13,7 @@
                                    type="text" class="form-control " placeholder="ex: iphone"/>
                         </div>
                     </div>
-                    <div class="row margin-bottom">
+                    <div class="row margin-bottom" style="display: none">
                         <div class="col-sm-12">
                             @if($tags || true)
                                 <div class="col-sm-3">
@@ -74,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div class="row margin-bottom">
+                    <div class="row margin-bottom" style="display: none;">
                         <div class="col-sm-12">
                             <div class="col-sm-2">
                                 <div class="form-group">
