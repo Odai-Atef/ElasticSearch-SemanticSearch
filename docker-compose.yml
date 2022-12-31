@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  vector:
+    build: "Vectorizations/Dockerfile"
+    ports:
+      - "5000:5000"
+  elasticsearch:
+    image: "elasticsearch:8.2.2"
+    ports:
+      - "9223:9200"
+  endpoints:
+    build: "APP/Dockerfile"
+    ports:
+      - "8003:80"
+  database:
+    image: "mariadb:latest"
+    ports:
+      - "3306:3306"
+  # customer_profiles:
+  #   build: ""
+  # recommendation_system:
+  #   build: ""
