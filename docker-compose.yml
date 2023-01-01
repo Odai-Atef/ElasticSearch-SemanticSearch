@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   vector:
-    build: "Vectorizations/Dockerfile"
+    build: "Vectorizations/"
     ports:
       - "5000:5000"
   elasticsearch:
@@ -9,7 +9,7 @@ services:
     ports:
       - "9223:9200"
   endpoints:
-    build: "APP/Dockerfile"
+    build: "APP/"
     ports:
       - "8003:80"
   database:
