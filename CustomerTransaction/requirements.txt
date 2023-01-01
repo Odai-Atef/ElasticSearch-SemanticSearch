@@ -1,0 +1,4 @@
+elasticsearch==8.4.3
+numpy
+pandas
+clickhouse-driver==0.2.5

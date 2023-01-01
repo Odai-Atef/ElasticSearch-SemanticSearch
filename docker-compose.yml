@@ -16,7 +16,7 @@ services:
     image: "mariadb:latest"
     ports:
       - "3306:3306"
-  # customer_profiles:
-  #   build: ""
+  customer_profiles:
+    build: "CustomerTransaction/"
   # recommendation_system:
   #   build: ""
