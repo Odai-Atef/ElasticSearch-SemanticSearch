@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  vector:
+    build: "Vectorizations/"
+    ports:
+      - "5000:5000"
+    container_name: "vectorizations"
+  elasticsearch:
+    image: "elasticsearch:8.2.2"
+    ports:
+      - "9223:9200"
+    container_name: "elasticsearch"
+  endpoints:
+    build: "APP/"
+    ports:
+      - "8003:80"
+    container_name: "endpointlaravel"
+  database:
+    image: "mariadb:latest"
+    ports:
+      - "3306:3306"
+    container_name: "mariadbdatabase"
+  customer_profiles:
+    build: "CustomerTransaction/"
+    container_name: "customertransaction"
+  # recommendation_system:
+  #   build: ""
