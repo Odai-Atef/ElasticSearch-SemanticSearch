@@ -18,10 +18,12 @@ services:
   database:
     image: "mariadb:latest"
     ports:
-      - "3306:3306"
+      - "3308:3306"
     container_name: "mariadbdatabase"
   customer_profiles:
     build: "CustomerTransaction/"
     container_name: "customertransaction"
-  # recommendation_system:
-  #   build: ""
+  recommendation_system:
+    build: "../Recommendation-Engine/"
+    ports:
+      -"5001:80"
