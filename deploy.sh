@@ -1,3 +1,4 @@
+
 #!/bin/bash  
 Green='\033[0;32m'
 White='\033[0;37m'       
@@ -20,3 +21,4 @@ curl -X PUT $Elastic_HOST$Recommendation_SCHEMA -H 'Content-Type: application/js
 # echo "Create Customer Schema \n"
 # curl -X PUT $Elastic_HOST+$Customer_SCHEMA -H 'Content-Type: application/json' -d''
 # echo "Creat Mysql Database and import the data"
+
